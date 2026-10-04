@@ -1,0 +1,19 @@
+name: Airly ATC Build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore
+        run: dotnet restore Airly-ATC.csproj
+      - name: Build
+        run: dotnet build Airly-ATC.csproj --configuration Release --no-restore
