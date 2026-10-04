@@ -50,25 +50,12 @@
                     BorderThickness="1"
                     CornerRadius="8"
                     Padding="12">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="SearchBox"
-                             Grid.Column="0"
-                             Background="Transparent"
-                             Foreground="{StaticResource PrimaryTextBrush}"
-                             BorderThickness="0"
-                             FontSize="14"
-                             VerticalContentAlignment="Center"
-                             TextChanged="SearchBox_OnTextChanged"/>
-                    <TextBlock Text="Search airport or position"
-                               IsHitTestVisible="False"
-                               Foreground="{StaticResource SecondaryTextBrush}"
-                               VerticalAlignment="Center"
-                               Visibility="{Binding Text, ElementName=SearchBox, Converter={StaticResource NullToVisibilityConverter}}"/>
-                </Grid>
+                <TextBox x:Name="SearchBox"
+                         Background="Transparent"
+                         Foreground="{StaticResource PrimaryTextBrush}"
+                         BorderThickness="0"
+                         FontSize="14"
+                         VerticalContentAlignment="Center"/>
             </Border>
         </Grid>
 
