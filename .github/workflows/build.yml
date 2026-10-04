@@ -24,7 +24,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore
-        run: dotnet restore Airly-ATC.csproj
+        run: dotnet restore Airly-ATC.csproj --runtime win-x64
 
       - name: Publish AirlyPilot.exe
         run: >
@@ -45,7 +45,6 @@ jobs:
             Write-Error "publish/AirlyPilot.exe was not created."
             exit 1
           }
-          Get-Item "publish/AirlyPilot.exe" | Format-List Name,Length,FullName
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
