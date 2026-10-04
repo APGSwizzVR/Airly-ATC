@@ -1,45 +1,39 @@
 # Airly ATC
 
-Airly ATC is the desktop controller application for the Airly global flight-simulation network.
+Airly ATC is the Windows controller client for the Airly network.
 
-## Current scope
+This revision replaces the original position-list prototype with the foundation of a VATSIM-style controller workstation:
 
-This first build establishes the ATC application shell and the core position-ownership model:
+- Radar scope with live simulated traffic movement
+- Aircraft tags, headings, altitude and squawk
+- Flight strips
+- Worldwide-position search architecture
+- DEL / GND / TWR / APP positions
+- Human controller ownership
+- Controller queues
+- Automatic Airly AI fallback when no human owns a position
+- Position release and automatic queue promotion
+- COM1 frequency display and controller radio UI
+- ATIS and controller workspace entry points
+- Zoomable radar
+- Network status and UTC clock
 
-- Worldwide airport/position architecture
-- One human controller per ATC position
-- FIFO controller queues
-- Automatic AI fallback when a position has no human controller
-- Automatic AI release when a human takes a position
-- Automatic AI resumption when a human leaves and no queued controller is waiting
-- Desktop UI foundation for the future live radar, voice, SimBrief, and Airly realtime services
+The current traffic is deliberately simulated so the desktop application can run without a backend. The next network layer will replace this simulation with Airly WebSocket state, real simulator traffic, live controller ownership, voice routing, flight plans and worldwide airport/procedure data.
 
-## Project
+## Architecture
 
-- .NET 8
-- WPF
-- Windows desktop
-- C#
+The controller client is intentionally separated from the authoritative network:
 
-## Run
+Airly Client / Simulator -> Airly Network Gateway -> Airly ATC Client
 
-Open `Airly-ATC.sln` in Visual Studio 2022+ with the .NET 8 SDK installed and run the project.
+The server will own aircraft state, controller positions, queues, flight plans, frequencies, handoffs and AI/human state. The desktop client is a presentation and control surface.
 
-The current build uses local demo data for the position-management UI. The next implementation stage will replace the demo data with the Airly Network API and global airport data service.
+## Build
 
-## Architecture target
+Requires .NET 8 SDK on Windows.
 
-```
-Airly ATC
-  |
-  +-- Airport Data
-  +-- ATC Position Manager
-  +-- Queue Manager
-  +-- AI Fallback Controller
-  +-- Airly Realtime Client
-  +-- Voice Client
-  +-- SimBrief Integration
-  +-- Live Radar
-```
+    dotnet restore
+    dotnet build
+    dotnet run
 
-The position manager is authoritative about human ownership. The AI controller is active only when a position has no human owner.
+This repository is not a copy of VATSIM software. It implements Airly's own network and UI while targeting comparable controller workflow and functionality.

@@ -7,19 +7,10 @@ public sealed class AtcPosition
     public required string AirportName { get; init; }
     public required string PositionName { get; init; }
     public required string Frequency { get; init; }
-
     public string? HumanController { get; set; }
-
     public Queue<string> ControllerQueue { get; } = new();
 
     public bool IsHumanControlled => !string.IsNullOrWhiteSpace(HumanController);
-    public bool IsAiControlled => !IsHumanControlled;
-
-    public string ControllerLabel =>
-        IsHumanControlled ? HumanController! : "Airly AI";
-
-    public string QueueLabel =>
-        ControllerQueue.Count == 0
-            ? "Queue empty"
-            : $"{ControllerQueue.Count} waiting";
+    public string ControllerLabel => IsHumanControlled ? HumanController! : "AIRLY AI";
+    public string QueueLabel => ControllerQueue.Count == 0 ? "No queue" : $"{ControllerQueue.Count} queued";
 }
