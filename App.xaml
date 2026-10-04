@@ -1,7 +1,8 @@
 <Application x:Class="AirlyATC.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml">
+             Startup="Application_Startup"
+             ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <SolidColorBrush x:Key="WindowBrush" Color="#0B0F10"/>
         <SolidColorBrush x:Key="PanelBrush" Color="#11171A"/>
@@ -11,27 +12,8 @@
         <SolidColorBrush x:Key="SecondaryTextBrush" Color="#929BA6"/>
         <SolidColorBrush x:Key="AccentBrush" Color="#4DA3FF"/>
         <SolidColorBrush x:Key="SuccessBrush" Color="#45C486"/>
-
-        <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
-            <Setter Property="FontFamily" Value="Segoe UI"/>
-        </Style>
-
-        <Style TargetType="Button">
-            <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
-            <Setter Property="Background" Value="{StaticResource PanelBrushAlt}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="12,7"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
-
-        <Style TargetType="TextBox">
-            <Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/>
-            <Setter Property="Background" Value="{StaticResource PanelBrushAlt}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Padding" Value="9,6"/>
-        </Style>
+        <Style TargetType="TextBlock"><Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/><Setter Property="FontFamily" Value="Segoe UI"/></Style>
+        <Style TargetType="Button"><Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/><Setter Property="Background" Value="{StaticResource PanelBrushAlt}"/><Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="Padding" Value="12,7"/><Setter Property="Cursor" Value="Hand"/></Style>
+        <Style TargetType="TextBox"><Setter Property="Foreground" Value="{StaticResource PrimaryTextBrush}"/><Setter Property="Background" Value="{StaticResource PanelBrushAlt}"/><Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/><Setter Property="BorderThickness" Value="1"/><Setter Property="Padding" Value="9,6"/></Style>
     </Application.Resources>
 </Application>

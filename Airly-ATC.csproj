@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
@@ -9,6 +8,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>AirlyPilot</AssemblyName>
     <RootNamespace>AirlyATC</RootNamespace>
+    <ApplicationIcon>Airly.ico</ApplicationIcon>
+    <PublishTrimmed>false</PublishTrimmed>
+    <EnableCompressionInSingleFile>false</EnableCompressionInSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <SelfContained>true</SelfContained>
+    <UseAppHost>true</UseAppHost>
   </PropertyGroup>
-
 </Project>

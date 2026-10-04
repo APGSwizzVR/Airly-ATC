@@ -13,19 +13,15 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-
       - name: Restore
         run: dotnet restore Airly-ATC.csproj --runtime win-x64
-
       - name: Publish AirlyPilot.exe
         run: >
           dotnet publish Airly-ATC.csproj
@@ -34,28 +30,32 @@ jobs:
           --self-contained true
           --property:PublishSingleFile=true
           --property:IncludeNativeLibrariesForSelfExtract=true
-          --property:EnableCompressionInSingleFile=true
+          --property:EnableCompressionInSingleFile=false
+          --property:PublishTrimmed=false
           --no-restore
           --output publish
-
       - name: Verify executable
         shell: pwsh
         run: |
-          if (-not (Test-Path "publish/AirlyPilot.exe")) {
-            Write-Error "publish/AirlyPilot.exe was not created."
-            exit 1
-          }
-
+          if (-not (Test-Path "publish/AirlyPilot.exe")) { Write-Error "publish/AirlyPilot.exe was not created."; exit 1 }
+          $size = (Get-Item "publish/AirlyPilot.exe").Length
+          if ($size -lt 1000000) { Write-Error "AirlyPilot.exe is unexpectedly small ($size bytes)."; exit 1 }
+          Write-Host "AirlyPilot.exe created: $size bytes"
+      - name: Create ZIP
+        shell: pwsh
+        run: Compress-Archive -Path "publish/AirlyPilot.exe" -DestinationPath "AirlyPilot-win-x64.zip" -Force
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: AirlyPilot
-          path: publish/AirlyPilot.exe
+          name: AirlyPilot-win-x64
+          path: |
+            publish/AirlyPilot.exe
+            AirlyPilot-win-x64.zip
           if-no-files-found: error
-
       - name: Create GitHub Release
         if: startsWith(github.ref, 'refs/tags/v')
         env:
           GH_TOKEN: ${{ github.token }}
+        shell: pwsh
         run: |
-          gh release create "${{ github.ref_name }}" "publish/AirlyPilot.exe" --title "AirlyPilot ${{ github.ref_name }}" --generate-notes
+          gh release create "${{ github.ref_name }}" "publish/AirlyPilot.exe" "AirlyPilot-win-x64.zip" --title "Airly Pilot ${{ github.ref_name }}" --generate-notes
