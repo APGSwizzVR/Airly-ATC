@@ -1,19 +1,62 @@
-name: Airly ATC Build
+name: Airly Pilot Release
 
 on:
   push:
-    branches: [main]
-  workflow_dispatch:
+    branches:
+      - main
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: windows-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-dotnet@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
+
       - name: Restore
         run: dotnet restore Airly-ATC.csproj
-      - name: Build
-        run: dotnet build Airly-ATC.csproj --configuration Release --no-restore
+
+      - name: Publish AirlyPilot.exe
+        run: >
+          dotnet publish Airly-ATC.csproj
+          --configuration Release
+          --runtime win-x64
+          --self-contained true
+          --property:PublishSingleFile=true
+          --property:IncludeNativeLibrariesForSelfExtract=true
+          --property:EnableCompressionInSingleFile=true
+          --no-restore
+          --output publish
+
+      - name: Verify executable
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "publish/AirlyPilot.exe")) {
+            Write-Error "publish/AirlyPilot.exe was not created."
+            exit 1
+          }
+          Get-Item "publish/AirlyPilot.exe" | Format-List Name,Length,FullName
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AirlyPilot
+          path: publish/AirlyPilot.exe
+          if-no-files-found: error
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${{ github.ref_name }}" "publish/AirlyPilot.exe" --title "AirlyPilot ${{ github.ref_name }}" --generate-notes

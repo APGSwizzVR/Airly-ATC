@@ -6,7 +6,7 @@
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>AirlyATC</AssemblyName>
+    <AssemblyName>AirlyPilot</AssemblyName>
     <RootNamespace>AirlyATC</RootNamespace>
     <ApplicationIcon></ApplicationIcon>
   </PropertyGroup>
