@@ -95,7 +95,7 @@ public partial class MainWindow : Window
         if (_positionService.TakePosition(_selectedPosition, CurrentController))
             RefreshSelection();
         else
-            MessageBox.Show("This position is already human-controlled. Join the queue.", "Airly ATC", MessageBoxButton.OK, MessageBoxImage.Information);
+            System.Windows.MessageBox.Show("This position is already human-controlled. Join the queue.", "Airly ATC", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void QueueButton_OnClick(object sender, RoutedEventArgs e)
@@ -106,7 +106,7 @@ public partial class MainWindow : Window
         if (_positionService.JoinQueue(_selectedPosition, CurrentController))
             RefreshSelection();
         else
-            MessageBox.Show("A human controller must currently own this position before you can queue.", "Airly ATC", MessageBoxButton.OK, MessageBoxImage.Information);
+            System.Windows.MessageBox.Show("A human controller must currently own this position before you can queue.", "Airly ATC", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void ReleaseButton_OnClick(object sender, RoutedEventArgs e)
@@ -220,13 +220,13 @@ public partial class MainWindow : Window
     private void RadarButton_Click(object sender, RoutedEventArgs e) => RadarCanvas.Focus();
     private void StripsButton_Click(object sender, RoutedEventArgs e) => StripList.Focus();
     private void AtisButton_Click(object sender, RoutedEventArgs e) =>
-        MessageBox.Show("ATIS service is connected to this controller position. Live network ATIS will be supplied by the Airly server.", "Airly ATIS");
+        System.Windows.MessageBox.Show("ATIS service is connected to this controller position. Live network ATIS will be supplied by the Airly server.", "Airly ATIS");
     private void SettingsButton_Click(object sender, RoutedEventArgs e) =>
-        MessageBox.Show("Controller settings will be persisted by the Airly account service.", "Airly Settings");
+        System.Windows.MessageBox.Show("Controller settings will be persisted by the Airly account service.", "Airly Settings");
 
     private void SendMessage_Click(object sender, RoutedEventArgs e)
     {
-        MessageBox.Show($"COM1 {_selectedPosition?.Frequency ?? "—"}\n\n{MessageBox.Text}", "Airly Radio");
-        MessageBox.Text = "";
+        System.Windows.MessageBox.Show($"COM1 {_selectedPosition?.Frequency ?? "—"}\n\n{RadioMessageBox.Text}", "Airly Radio");
+        RadioMessageBox.Text = "";
     }
 }

@@ -160,7 +160,7 @@
                         <TextBlock Text="COM1" FontSize="9" Foreground="{StaticResource SecondaryTextBrush}"/>
                         <TextBlock x:Name="Com1Text" Text="118.600" FontSize="16" FontWeight="SemiBold"/>
                     </StackPanel>
-                    <TextBox Grid.Column="1" x:Name="MessageBox" Margin="10,0" VerticalContentAlignment="Center" Text="Ready. Radio channel connected."/>
+                    <TextBox Grid.Column="1" x:Name="RadioMessageBox" Margin="10,0" VerticalContentAlignment="Center" Text="Ready. Radio channel connected."/>
                     <Button Grid.Column="2" Content="SEND" Click="SendMessage_Click"/>
                 </Grid>
             </Border>
